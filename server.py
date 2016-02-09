@@ -65,7 +65,7 @@ class Server():
 
 if __name__ == '__main__':
     if len(sys.argv) < 2:
-        sys.exit("Usage: python server whyilikethis")
+        sys.exit("Usage: python server.py whyilikethis.py")
 
     server = Server(('localhost', 5000), whyilikethis.app)
     print 'Starting server...'
