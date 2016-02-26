@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My account</title>
+</head>
+<body>
+    <p>Your account: <span><a href="{{ url_for("logout") }}">Logout</a></span></p>
+    {% if user %}
+        <p>Username: {{ user['username'] }}</p>
+        <ul>Memories:
+        <br>
+            <form>
+                {% for memory in user['memories'] %}
+                    <li>
+                        Image: {{ memory['image'] }}<br>
+                        Name: {{ memory['name'] }}<br>
+                        Address: {{ memory['address'] }}<br>
+                        Description: {{ memory['description'] }}<br>
+                        <input type="submit" formmethod="post"
+                               formaction="{{ url_for('delete_memory', username = user['username'], memory_id = memory['id']) }}"
+                               value="Delete Memory">
+                        <br>
+                        <br>
+                    </li>
+                {% endfor %}
+            </form>
+        </ul>
+        <a href="{{ url_for("add_memory", username = user['username']) }}">Add a memory</a>
+    {% endif %}
+</body>
+</html>

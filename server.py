@@ -43,13 +43,20 @@ class Server():
         # this is where each request is handled and application is called with env and the response procedure
         parsed_request = request.split(" ")
         # print 'request in handle_request =',request
-        result = self.application(self.build_environment(parsed_request), self.start_response)
+        env = self.build_environment(parsed_request)
+
+        result = None
+        if env:
+            result = self.application(env, self.start_response)
         # result is an iterable
         try:
             for data in result:
                 self.write(data)
+        except Exception as e:
+            print "Error in handling request!", e.message
         finally:
-            result.close()
+            if result:
+                result.close()
 
     def start_response(self, status, headers):
         # The procedure that returns a write callable
@@ -58,7 +65,6 @@ class Server():
         return self.write
 
     def write(self, data):
-        # TODO: Instead of writing response body to stdout, send with headers to client
         self.client_socket.sendall(data)
         self.client_socket.close()
 
