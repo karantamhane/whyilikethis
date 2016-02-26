@@ -118,7 +118,5 @@ def logout():
     return response
 
 if __name__ == '__main__':
-    # TODO: Figure out how this works
-    app.secret = '\x1a\xfev\xaf\xfe\x8at\xff\xd5u!\xfa\x16ws>\xee\xfahTz\x90\xd3j'
     app.run()
     db.close()
