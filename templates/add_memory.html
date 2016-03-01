@@ -9,11 +9,14 @@
     {{ error }}
     {% endif %}
     <p>Add a memory</p>
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
         Restaurant name: <input type="text" name="name"><br><br>
         Address: <input type="text" name="address"><br><br>
         Description: <input type="text" name="description"><br><br>
-        Image: <input type="text" name="image"><br><br>
+        Upload Image File:
+        <input type="file" name="image"><br>
+        <br>
+{#        Image: <input type="text" name="image"><br><br>#}
         <input type="submit" value="Add Memory">
     </form>
 </body>
