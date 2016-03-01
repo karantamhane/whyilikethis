@@ -13,7 +13,12 @@
             <form>
                 {% for memory in user['memories'] %}
                     <li>
-                        Image: {{ memory['image'] }}<br>
+                        Image:
+                        {% if memory['image_data'] %}
+                            <img src="data:image/png; base64, {{ memory['image_data'] }}" ><br>
+                        {% else %}
+                            No image for this memory
+                        {% endif %}
                         Name: {{ memory['name'] }}<br>
                         Address: {{ memory['address'] }}<br>
                         Description: {{ memory['description'] }}<br>
