@@ -1,10 +1,7 @@
 from flask import Flask, request, render_template, redirect, url_for, make_response
 from models import *
-db = Database()
+# db = Database()
 app = Flask(__name__)
-
-users_collection = 'users'
-# db.db[users_collection].drop()
 
 
 @app.route('/sign_up/', methods = ['GET','POST'])
@@ -66,7 +63,7 @@ def login():
         auth_token = request.cookies.get('auth_token', None)
         username = request.cookies.get('username', None)
         if auth_token != '':
-            print 'auth token =',auth_token,'username',username
+            # print 'auth token =',auth_token,'username',username
             return redirect(url_for('account', username = username))
         return render_template('login.html')
 
@@ -75,7 +72,7 @@ def account(username):
     auth_token = request.cookies.get('auth_token')
     if User.auth_by_token(auth_token, username):
         user = User.find({'username': username})
-        print 'user info is',user.info
+        # print 'user info is',user.info
         return render_template('account.html', user = user.info)
     else:
         return redirect(url_for('logout'))
@@ -88,12 +85,17 @@ def add_memory(username):
         name = request.form['name']
         desc = request.form['description']
         address = request.form['address']
-        image = request.form['image']
+        print 'before extracting image from form'
+        print 'form =',request.form, 'files =',request.files
+        image = request.files['image']
         # print name,desc,address,image
         user = User.find({'username': username})
-        user.add_memory({'name': name, 'address': address, 'description': desc, 'image': image})
+        # TODO: Store image in gridfs and insert id in image field of memory
+        print 'before add_memory in app'
+        # TODO: Maybe write a static method to store image in User and use image id?
+        user.add_memory({'name': name, 'address': address, 'description': desc, 'image': None}, image)
 
-        auth_token = request.cookies.get('auth_token')
+        # auth_token = request.cookies.get('auth_token')
         # print 'in route add_memory',user.info
         return redirect(url_for('account', username = username))
 
@@ -103,18 +105,15 @@ def delete_memory(username, memory_id):
     # print 'called delete_memory for',user.info
     user.delete_memory(memory_id)
 
-    auth_token = request.cookies.get('auth_token')
-    return redirect(url_for('account', username = username, token = auth_token))
+    # auth_token = request.cookies.get('auth_token')
+    return redirect(url_for('account', username = username))
 
 @app.route('/account/logout')
 def logout():
     # TODO: Update cookies, redirect to login page
-    print 'before logout code executes'
     response = make_response(redirect(url_for('login')))
-    print 'made response'
     response.set_cookie('username', '')
     response.set_cookie('auth_token', '')
-    print 'set cookies, now returning..'
     return response
 
 if __name__ == '__main__':
