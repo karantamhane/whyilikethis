@@ -58,9 +58,14 @@ class User():
         self.password = generate_password_hash(password)
         return
 
-    def get_memories(self):
-        user = User.find({'username': self.info['username']})
-        return [dict(memory) for memory in user['memories']]
+    def get_memories_with_image_data(self):
+        for memory in self.info['memories']:
+            if image_collection.exists(memory['image']):
+                memory['image_data'] = base64.b64encode(image_collection.get(memory['image']).read())
+                # print 'memory data received'
+            else:
+                memory['image_data'] = None
+        return self.info['memories']
 
     def add_memory(self, memory_dict, image):
         # TODO: Add images and save to image_collection
