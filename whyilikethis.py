@@ -72,6 +72,8 @@ def account(username):
     auth_token = request.cookies.get('auth_token')
     if User.auth_by_token(auth_token, username):
         user = User.find({'username': username})
+        print 'calling get_memories_with_image_data'
+        user.info['memories'] = user.get_memories_with_image_data()
         # print 'user info is',user.info
         return render_template('account.html', user = user.info)
     else:
@@ -85,8 +87,6 @@ def add_memory(username):
         name = request.form['name']
         desc = request.form['description']
         address = request.form['address']
-        print 'before extracting image from form'
-        print 'form =',request.form, 'files =',request.files
         image = request.files['image']
         # print name,desc,address,image
         user = User.find({'username': username})
