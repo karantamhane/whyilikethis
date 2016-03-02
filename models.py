@@ -68,11 +68,8 @@ class User():
         return self.info['memories']
 
     def add_memory(self, memory_dict, image):
-        # TODO: Add images and save to image_collection
-        print 'memory dict in user.add_memory',memory_dict
         if image:
             image_id = image_collection.put(image)
-            print 'added image to gridfs. image_id =',image_id
             memory_dict['image'] = image_id
         self.info['memory_count'] += 1
         memory_dict['id'] = self.info['memory_count']
@@ -81,9 +78,8 @@ class User():
         return res
 
     def delete_memory(self, memory_id):
-        # TODO: Delete all relevant images too
         memory = filter(lambda (mem): mem['id'] == int(memory_id), self.info['memories'])[0]
-        print 'to delete this -',memory,memory['image']
+        # print 'to delete this -',memory,memory['image']
         if image_collection.exists(memory['image']):
             image_collection.delete(memory['image'])
         self.info['memories'] = filter(lambda (mem): mem['id'] != int(memory_id), self.info['memories'])
