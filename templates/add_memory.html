@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Add A Memory</title>
+    <link rel="stylesheet" type="text/css" href="/static/add_memory.css">
 </head>
 <body>
     {% if error %}
@@ -12,12 +13,14 @@
     <form method="post" enctype="multipart/form-data">
         Restaurant name: <input type="text" name="name"><br><br>
         Address: <input type="text" name="address"><br><br>
-        Description: <input type="text" name="description"><br><br>
+        <label for="description">Tip</label>
+        <textarea rows="4" id="desc" name="description"></textarea><br><br>
         Upload Image File:
         <input type="file" name="image"><br>
         <br>
-{#        Image: <input type="text" name="image"><br><br>#}
-        <input type="submit" value="Add Memory">
+        <input class="add_memory_button" type="submit" value="Add Memory">
     </form>
+    <br>
+    <a id="back" href={{ url_for("login") }}>Back to account</a>
 </body>
 </html>
