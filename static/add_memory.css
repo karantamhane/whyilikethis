@@ -1,0 +1,45 @@
+body {
+    background-color: white;
+    font-family: Chalkboard;
+    font-size: larger;
+    margin: 30px;
+    margin-top: 40px;
+}
+
+input[type="text"]{
+    border-radius: 5px;
+    height: 20px;
+    font-family: Chalkboard;
+    font-size: medium;
+}
+
+input[type="file"]{
+    border-radius: 10px;
+    font-family: Chalkboard;
+}
+
+textarea {
+    vertical-align: top;
+    font-size: medium;
+    font-family: Chalkboard;
+}
+
+#desc {
+    width: 30%;
+    border-radius: 10px;
+}
+
+.add_memory_button {
+    width: 10em;
+    height: 3em;
+    color: limegreen;
+    font-size: 12px;
+    font-weight: bold;
+    background-color: white;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+#back {
+    font-size: medium;
+}
