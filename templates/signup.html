@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Sign up for an account</title>
+    <link rel="stylesheet" type="text/css" href="/static/login.css">
 </head>
 <body>
     {% if error %}
-    {{ error }}
+        {{ error }}
+        <a href="{{ url_for("login") }}">here</a>
     {% endif %}
     
     <p>Sign up here to create an account</p>

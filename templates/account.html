@@ -28,7 +28,7 @@
                                 No image for this memory<br>
                             {% endif %}
                         </div>
-                        <input type="submit" formmethod="post"
+                        <input class="delete_memory_button" type="submit" formmethod="post"
                                formaction="{{ url_for('delete_memory', username = user['username'], memory_id = memory['id']) }}"
                                value="Delete Memory">
                         <br>
@@ -37,7 +37,8 @@
                 {% endfor %}
             </form>
         </ul>
-        <a href="{{ url_for("add_memory", username = user['username']) }}">Add a memory</a>
+        <a href="{{ url_for("add_memory", username = user['username']) }}">Add a memory</a><br>
+        <br>
     {% endif %}
 </body>
 </html>
