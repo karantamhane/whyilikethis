@@ -11,7 +11,7 @@ def sign_up():
         # Display sign up form for user account creation
         username = request.form["new_username"]
         if User.find({'username': username}):
-            return render_template('signup.html', error = "User already exists! Choose a different username or login here")
+            return render_template('signup.html', error = "User already exists! Choose a different username or login")
         pswd = request.form["new_password"]
         if pswd == request.form["confirm_password"]:
             password = pswd
@@ -46,7 +46,7 @@ def login():
             return redirect(url_for('sign_up')) #TODO: add error msg
 
         auth_token = user.authenticate(username, password)
-        if auth_token != '':
+        if auth_token and auth_token != '':
             response = make_response(redirect(url_for('account', username = username)))
             response.set_cookie('username', username)
             response.set_cookie('auth_token', auth_token)
@@ -73,7 +73,7 @@ def account(username):
 @app.route('/<username>/account/add_memory', methods = ['GET', 'POST'])
 def add_memory(username):
     if request.method == 'GET':
-        return render_template('add_memory.html')
+        return render_template('add_memory.html', username = username)
     elif request.method == 'POST':
         name = request.form['name']
         desc = request.form['description']
