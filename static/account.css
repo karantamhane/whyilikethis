@@ -1,0 +1,25 @@
+body {
+    background-color: ghostwhite;
+    font-family: Chalkboard;
+    font-size: larger;
+}
+
+.tip {
+    color: blue;
+}
+
+.memory {
+    padding-top: 1%;
+    padding-bottom: 1%;
+    padding-left: 3%;
+    padding-right: 3%;
+    border: groove;
+    border-radius: 15px;
+    margin-right: 30%;
+}
+
+.logout span {
+    float: right;
+    padding-right: 15px;
+}
+
