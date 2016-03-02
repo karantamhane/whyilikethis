@@ -3,31 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <title>My account</title>
+    <link rel="stylesheet" type="text/css" href="/static/account.css">
 </head>
 <body>
-    <p>Your account: <span><a href="{{ url_for("logout") }}">Logout</a></span></p>
+    <p class="logout">Your account: <span><a href="{{ url_for("logout") }}">Logout</a></span></p>
     {% if user %}
         <p>Username: {{ user['username'] }}</p>
-        <ul>Memories:
+        <ul>Memories:<br>
         <br>
             <form>
                 {% for memory in user['memories'] %}
-                    <li>
-                        Image:
-                        {% if memory['image_data'] %}
-                            <img src="data:image/png; base64, {{ memory['image_data'] }}" ><br>
-                        {% else %}
-                            No image for this memory
-                        {% endif %}
+                    <li class="memory">
                         Name: {{ memory['name'] }}<br>
                         Address: {{ memory['address'] }}<br>
-                        Description: {{ memory['description'] }}<br>
+                        Tip: <span class="tip">{{ memory['description'] }}</span><br>
+                        <br>
+                        <div>
+                            {% if memory['image'] %}
+    {#                            <img src="data:image/jpg; base64, {{ memory['image_data'] }}" ><br>#}
+                                <div>
+                                    <img src="{{ url_for("get_image", image_id = memory['image']) }}" width="100%" height="100%"><br>
+                                </div>
+                            {% else %}
+                                No image for this memory<br>
+                            {% endif %}
+                        </div>
                         <input type="submit" formmethod="post"
                                formaction="{{ url_for('delete_memory', username = user['username'], memory_id = memory['id']) }}"
                                value="Delete Memory">
                         <br>
                         <br>
-                    </li>
+                    </li><br>
                 {% endfor %}
             </form>
         </ul>
