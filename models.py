@@ -1,9 +1,6 @@
 from werkzeug.security import generate_password_hash, check_password_hash
-from database import *
-from gridfs import GridFS
+from flask import current_app as app
 import random, string, base64
-db = Database(drop_db = False)
-image_collection = GridFS(db.db, 'images')
 
 
 class User():
@@ -18,15 +15,15 @@ class User():
 
     def save(self):
         # print 'Adding user', self.info
-        return db.add_entry(self)
+        return app.db.add_entry(self)
 
     @staticmethod
     def find_all():
-        return db.get_collection(User.collection)
+        return app.db.get_collection(User.collection)
 
     @staticmethod
     def find(query_dict):
-        result = db.find_entry(User.collection, query_dict)
+        result = app.db.find_entry(User.collection, query_dict)
         if result:
             user = User(result['username'], result['password'])
             user.info = result
@@ -60,8 +57,8 @@ class User():
 
     def get_memories_with_image_data(self):
         for memory in self.info['memories']:
-            if image_collection.exists(memory['image']):
-                memory['image_data'] = base64.b64encode(image_collection.get(memory['image']).read())
+            if app.image_collection.exists(memory['image']):
+                memory['image_data'] = base64.b64encode(app.image_collection.get(memory['image']).read())
                 # print 'memory data received'
             else:
                 memory['image_data'] = None
@@ -69,20 +66,20 @@ class User():
 
     def add_memory(self, memory_dict, image):
         if image:
-            image_id = image_collection.put(image)
+            image_id = app.image_collection.put(image)
             memory_dict['image'] = image_id
         self.info['memory_count'] += 1
         memory_dict['id'] = self.info['memory_count']
         self.info['memories'].append(memory_dict)
-        res = db.update_entry({'username': self.info['username']}, self)
+        res = app.db.update_entry({'username': self.info['username']}, self)
         return res
 
     def delete_memory(self, memory_id):
         memory = filter(lambda (mem): mem['id'] == int(memory_id), self.info['memories'])[0]
         # print 'to delete this -',memory,memory['image']
-        if image_collection.exists(memory['image']):
-            image_collection.delete(memory['image'])
+        if app.image_collection.exists(memory['image']):
+            app.image_collection.delete(memory['image'])
         self.info['memories'] = filter(lambda (mem): mem['id'] != int(memory_id), self.info['memories'])
-        res = db.update_entry({'username': self.info['username']}, self)
+        res = app.db.update_entry({'username': self.info['username']}, self)
         return res
 

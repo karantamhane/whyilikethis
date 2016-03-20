@@ -1,9 +1,12 @@
 from flask import Flask, request, render_template, redirect, url_for, make_response
 from bson import ObjectId
+from gridfs import GridFS
 from models import *
-# db = Database()
-app = Flask(__name__)
+from database import Database
 
+app = Flask(__name__)
+app.db = Database()
+app.image_collection = GridFS(app.db.db, 'images')
 
 @app.route('/sign_up/', methods = ['GET','POST'])
 def sign_up():
@@ -94,8 +97,8 @@ def delete_memory(username, memory_id):
 @app.route('/get_image/<image_id>/', methods = ['GET'])
 def get_image(image_id):
     image_id = ObjectId(image_id)
-    if image_collection.exists(image_id):
-        image = image_collection.get(image_id)
+    if app.image_collection.exists(image_id):
+        image = app.image_collection.get(image_id)
         response = make_response(image.read())
         response.mimetype = "image/png"
         return response
@@ -112,4 +115,3 @@ def logout():
 
 if __name__ == '__main__':
     app.run()
-    db.close()

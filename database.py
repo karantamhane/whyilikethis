@@ -1,15 +1,15 @@
 # from models import *
 from pymongo import *
-import json
+# import json
 
 # DB methods take in any object that has a class variable "collection" which references
 # the collection name where it is stored in the database
 
 class Database:
-    def __init__(self, drop_db = False):
+    def __init__(self):
         self.client = MongoClient()
-        if drop_db:
-            self.client.drop_database('whyilikethis')
+        # if drop_db:
+        #     self.client.drop_database('whyilikethis')
         # TODO: Look into configuring databases if creating anew
         self.db = self.client.whyilikethis
 
