@@ -21,6 +21,6 @@
         <input class="add_memory_button" type="submit" value="Add Memory">
     </form>
     <br>
-    <a id="back" href={{ url_for("login") }}>Back to account</a>
+    <form><input class="back_to_account_button" type="submit" value="Cancel" formmethod="get" formaction="{{ url_for("login") }}"></form>
 </body>
 </html>

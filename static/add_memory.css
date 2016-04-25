@@ -1,5 +1,5 @@
 body {
-    background-color: whitesmoke;
+    background-color: white;
     font-family: Chalkboard;
     font-size: larger;
     margin: 30px;
@@ -33,7 +33,20 @@ textarea {
     width: 10em;
     height: 3em;
     color: limegreen;
-    font-size: 12px;
+    font-family: Chalkboard;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: white;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+.back_to_account_button {
+    width: 10em;
+    height: 3em;
+    font-family: Chalkboard;
+    color: red;
+    font-size: 16px;
     font-weight: bold;
     background-color: white;
     border-radius: 10px;
