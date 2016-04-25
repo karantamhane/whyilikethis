@@ -15,7 +15,8 @@ body {
     padding-right: 3%;
     border: groove;
     border-radius: 15px;
-    margin-right: 30%;
+    margin-right: 15%;
+    margin-left: 5%;
 }
 
 .delete_memory_button {
@@ -40,6 +41,7 @@ body {
     background-color: white;
     border-radius: 10px;
     margin-top: 10px;
+    margin-left: 8%;
 }
 
 .logout_button {

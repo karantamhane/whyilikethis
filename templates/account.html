@@ -29,10 +29,9 @@
                                 No image for this memory<br>
                             {% endif %}
                         </div>
-                        <input class="delete_memory_button" type="submit" formmethod="post"
+                        <p align="right"><input class="delete_memory_button" type="submit" formmethod="post"
                                formaction="{{ url_for('delete_memory', username = user['username'], memory_id = memory['id']) }}"
-                               value="Delete Memory">
-                        <br>
+                               value="Delete Memory"></p>
                         <br>
                     </li><br>
                 {% endfor %}
@@ -41,6 +40,8 @@
             <form>
             <input class="add_memory_button" type="submit" formmethod="get" formaction="{{ url_for('add_memory', username = user['username']) }}"
                    value="Add a Memory">
+            <br>
+            <br>
             </form>
         <br>
     {% endif %}
